@@ -15,5 +15,10 @@ export default {
   },
   plugins: [
     require('@tailwindcss/forms')
-  ]
+  ],
+  server: {
+    watch: {
+      usePolling: true
+    }
+  },
 } satisfies Config
