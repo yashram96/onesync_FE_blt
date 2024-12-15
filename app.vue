@@ -8,6 +8,7 @@
       <HeroSection />
       <FeaturesSection />
       <HowItWorksSection />
+      <PricingSection />
       <NewsletterSection />
     </main>
     <TheFooter />
