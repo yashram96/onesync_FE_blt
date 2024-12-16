@@ -1,6 +1,6 @@
 <template>
   <section id="how-it-works" class="py-20 bg-gray-50">
-    <div class="container mx-auto px-4">
+    <div class="mx-auto px-4">
       <h2 class="text-4xl font-bold text-center text-primary mb-16">
         How It Works
       </h2>

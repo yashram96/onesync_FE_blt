@@ -20,15 +20,15 @@
     >
       <div 
         v-if="isOpen"
-        class="md:hidden fixed inset-0 top-[73px] bg-white z-40"
+        class="md:hidden fixed inset-0 top-[73px] z-40"
       >
-        <div class="p-4 space-y-4">
+        <div class="p-4 space-y-4 !bg-white">
           <NuxtLink 
             v-for="item in menuItems" 
             :key="item.text" 
             :to="item.link"
             @click="closeMenu"
-            class="block py-2 text-gray-600 hover:text-primary transition-colors text-lg"
+            class="block py-2 text-gray-600 hover:text-primary transition-colors !bg-red text-lg"
           >
             {{ item.text }}
           </NuxtLink>

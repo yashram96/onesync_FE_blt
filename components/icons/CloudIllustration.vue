@@ -1,5 +1,5 @@
 <template>
-  <svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="100%" height="100%" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M400 100C250 100 150 200 150 350C150 500 250 600 400 600C550 600 650 500 650 350C650 200 550 100 400 100Z" fill="#390050" fill-opacity="0.1"/>
     <path d="M300 250C250 250 200 300 200 350C200 400 250 450 300 450C350 450 400 400 400 350C400 300 350 250 300 250Z" fill="#390050" fill-opacity="0.2"/>
     <path d="M500 250C450 250 400 300 400 350C400 400 450 450 500 450C550 450 600 400 600 350C600 300 550 250 500 250Z" fill="#390050" fill-opacity="0.2"/>
