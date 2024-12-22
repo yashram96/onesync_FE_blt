@@ -1,5 +1,8 @@
 <template>
-  <aside class="w-64 bg-white border-r border-gray-200 min-h-screen pt-16">
+  <aside 
+    class="fixed md:static inset-0 bg-white border-r border-gray-200 w-64 min-h-screen pt-16 transform transition-transform duration-300 ease-in-out z-20"
+    :class="[isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0']"
+  >
     <div class="p-4">
       <div class="space-y-4">
         <!-- Quick Actions -->
@@ -26,6 +29,18 @@
 
     <!-- Cloud Account Modal -->
     <AddCloudAccountModal v-model="showAddCloudAccountModal" />
+
+    <!-- Mobile Overlay -->
+     <!-- # TO DO  -->
+    <!-- <div 
+      v-if="isOpen"
+      class="fixed inset-0 bg-black/50 z-10 md:hidden"
+      @click="$emit('update:modelValue', false)"
+    /> -->
+     <div 
+      v-if="isOpen"
+      class="fixed inset-0 bg-grey/50 z-10 md:hidden"
+    />
   </aside>
 </template>
 
@@ -36,6 +51,15 @@ import Button from '~/components/ui/Button.vue'
 import ActivityLog from '~/components/dashboard/ActivityLog.vue'
 import AddCloudAccountModal from '~/components/dashboard/cloud/AddCloudAccountModal.vue'
 
+const props = defineProps<{
+  modelValue: boolean
+}>()
+
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+}>()
+
+const isOpen = computed(() => props.modelValue)
 const showAddCloudAccountModal = ref(false)
 
 const quickActions = [

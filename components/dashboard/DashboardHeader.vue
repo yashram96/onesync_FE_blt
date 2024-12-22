@@ -2,10 +2,18 @@
   <header class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-30">
     <div class="h-16 px-4 flex items-center justify-between">
       <!-- Logo -->
-      <NuxtLink to="/dashboard" class="flex items-center">
-        <OneSyncLogo class="h-8 w-auto text-primary" />
-        <span class="sr-only">OneSync</span>
-      </NuxtLink>
+      <div class="flex items-center">
+        <button 
+          class="mr-4 text-gray-600 hover:text-primary md:hidden"
+          @click="toggleSidebar"
+        >
+          <Bars3Icon class="w-6 h-6" />
+        </button>
+        <NuxtLink to="/dashboard" class="flex items-center">
+          <OneSyncLogo class="h-8 w-auto text-primary" />
+          <span class="sr-only">OneSync</span>
+        </NuxtLink>
+      </div>
 
       <!-- Navigation -->
       <nav class="hidden md:flex items-center space-x-6">
@@ -29,9 +37,15 @@
 </template>
 
 <script setup lang="ts">
+import { Bars3Icon } from '@heroicons/vue/24/outline'
+
 const route = useRoute()
 
 import OneSyncLogo from '~/components/icons/OneSyncLogo.vue'
+
+const emit = defineEmits<{
+  'toggle-sidebar': []
+}>()
 
 const navItems = [
   { name: 'Home', to: '/dashboard' },
@@ -43,5 +57,8 @@ const navItems = [
 
 const isActive = (path: string) => {
   return route.path === path || route.path.startsWith(`${path}/`)
+}
+const toggleSidebar = () => {
+  emit('toggle-sidebar')
 }
 </script>
