@@ -6,6 +6,11 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
   },
+  runtimeConfig: {
+    public: {
+      SHOW_AUTH_LINKS: process.env.NUXT_PUBLIC_SHOW_AUTH_LINKS || 'false'
+    }
+  },
   vite: {
     server: {
       watch: {
