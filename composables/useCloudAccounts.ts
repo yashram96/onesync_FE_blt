@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 interface CloudAccount {
   id: string
@@ -6,72 +6,78 @@ interface CloudAccount {
   name: string
   status: 'active' | 'inactive'
   dateAdded: string
+  settings?: {
+    defaultFolder?: string
+    autoSync?: boolean
+    syncInterval?: number
+  }
 }
 
 export function useCloudAccounts() {
-  const accounts = ref<CloudAccount[]>([])
-  const isLoading = ref(false)
-  const error = ref<string | null>(null)
-
-  const linkCloudAccount = async (provider: string, credentials: any) => {
-    isLoading.value = true
-    error.value = null
-
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      // Validate credentials based on provider
-      const isValid = await validateCredentials(provider, credentials)
-      
-      if (!isValid) {
-        throw new Error('Invalid credentials. Please check and try again.')
+  // Mock initial data for demonstration
+  const accounts = ref<CloudAccount[]>([
+    {
+      id: '1',
+      provider: 'aws',
+      name: 'Production S3',
+      status: 'active',
+      dateAdded: '2024-04-01',
+      settings: {
+        defaultFolder: '/production',
+        autoSync: true,
+        syncInterval: 15
       }
+    },
+    {
+      id: '2',
+      provider: 'google',
+      name: 'Marketing Assets',
+      status: 'active',
+      dateAdded: '2024-04-02',
+      settings: {
+        defaultFolder: '/marketing',
+        autoSync: false,
+        syncInterval: 30
+      }
+    }
+  ])
 
-      // Add the account to the list
-      accounts.value.push({
-        id: Math.random().toString(36).substr(2, 9),
-        provider,
-        name: getAccountName(provider, credentials),
-        status: 'active',
-        dateAdded: new Date().toISOString()
-      })
+  const addCloudAccount = async (provider: string, credentials: any) => {
+    const newAccount: CloudAccount = {
+      id: Math.random().toString(36).substr(2, 9),
+      provider,
+      name: credentials.name || `${provider} Account`,
+      status: 'active',
+      dateAdded: new Date().toISOString(),
+      settings: {
+        defaultFolder: '',
+        autoSync: false,
+        syncInterval: 15
+      }
+    }
+    
+    accounts.value.push(newAccount)
+    return newAccount
+  }
 
-    } catch (err: any) {
-      error.value = err.message
-      throw err
-    } finally {
-      isLoading.value = false
+  const updateCloudAccount = async (accountId: string, updates: any) => {
+    const account = accounts.value.find(a => a.id === accountId)
+    if (account) {
+      Object.assign(account, updates)
     }
   }
 
-  const validateCredentials = async (provider: string, credentials: any) => {
-    // Simulate credential validation
-    // In production, this would make actual API calls to the cloud providers
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // For demo purposes, always return true
-    // In production, implement actual validation logic
-    return true
-  }
-
-  const getAccountName = (provider: string, credentials: any): string => {
-    switch (provider) {
-      case 'google':
-        return credentials.keyFile?.project_id || 'Google Cloud Storage'
-      case 'aws':
-        return credentials.bucket || 'AWS S3'
-      case 'azure':
-        return credentials.accountName || 'Azure Storage'
-      default:
-        return 'Cloud Storage Account'
+  const removeCloudAccount = async (accountId: string) => {
+    const index = accounts.value.findIndex(a => a.id === accountId)
+    if (index !== -1) {
+      accounts.value.splice(index, 1)
     }
   }
 
   return {
     accounts,
-    isLoading,
-    error,
-    linkCloudAccount
+    addCloudAccount,
+    updateCloudAccount,
+    removeCloudAccount
   }
 }
