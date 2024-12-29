@@ -9,7 +9,7 @@
           <component :is="provider.icon" class="w-6 h-6 text-gray-600 mr-2" />
           <h4 class="text-sm font-medium text-gray-700">{{ provider.name }}</h4>
         </div>
-        <Button variant="primary" @click="addAccount(provider)">
+        <Button variant="primary" @click="openProviderForm(provider)">
           Add Account
         </Button>
       </div>
@@ -25,6 +25,13 @@
         />
       </div>
     </div>
+
+    <!-- Cloud Account Modal -->
+    <AddCloudAccountModal 
+      v-model="showAccountModal"
+      :initial-provider="selectedProvider"
+      @account-added="handleAccountAdded"
+    />
   </div>
 </template>
 
@@ -32,18 +39,27 @@
 import { ref } from 'vue'
 import Button from '~/components/ui/Button.vue'
 import CloudAccountCard from './cloud/CloudAccountCard.vue'
+import AddCloudAccountModal from '~/components/dashboard/cloud/AddCloudAccountModal.vue'
 import { useCloudAccounts } from '~/composables/useCloudAccounts'
 import { cloudProviders } from '~/constants/cloud'
 
-const { accounts, addCloudAccount, updateCloudAccount, removeCloudAccount } = useCloudAccounts()
+const { accounts, updateCloudAccount, removeCloudAccount } = useCloudAccounts()
+
+const showAccountModal = ref(false)
+const selectedProvider = ref<any>(null)
 
 const getAccountsByProvider = (providerId: string) => {
   return accounts.value.filter(account => account.provider === providerId)
 }
 
-const addAccount = (provider: any) => {
-  // This will trigger the cloud account modal from the parent
-  emit('add-account', provider)
+const openProviderForm = (provider: any) => {
+  selectedProvider.value = provider
+  showAccountModal.value = true
+}
+
+const handleAccountAdded = () => {
+  showAccountModal.value = false
+  selectedProvider.value = null
 }
 
 const updateAccount = (accountId: string, updates: any) => {
@@ -55,8 +71,4 @@ const removeAccount = (accountId: string) => {
     removeCloudAccount(accountId)
   }
 }
-
-const emit = defineEmits<{
-  'add-account': [provider: any]
-}>()
 </script>
