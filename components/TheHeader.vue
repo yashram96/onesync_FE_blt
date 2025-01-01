@@ -10,13 +10,22 @@
       <MobileMenu />
 
       <!-- Desktop CTA Button -->
-      <div class="hidden md:block">
+      <div class="flex flex-row gap-4 justify-center items-center">
+        <template v-if="$globalVars.showAuthLinks">
+        <NuxtLink to="/auth/login">
+          <Button variant="primary">
+            Sign In
+          </Button>
+        </NuxtLink>
+      </template>
+      <template v-else>
         <Button 
           variant="primary"
           @click="showWaitlistModal = true"
         >
-          Join Waitlist
+          Join the Waitlist
         </Button>
+        </template>
       </div>
     </nav>
   </header>

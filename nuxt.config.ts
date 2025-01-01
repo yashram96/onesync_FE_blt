@@ -7,8 +7,11 @@ export default defineNuxtConfig({
     strict: true,
   },
   runtimeConfig: {
+    SHOW_AUTH_LINKS: false,
     public: {
-      SHOW_AUTH_LINKS: process.env.NUXT_PUBLIC_SHOW_AUTH_LINKS || 'false'
+      apiBase: '',
+      apiVersion: '',
+
     }
   },
   vite: {

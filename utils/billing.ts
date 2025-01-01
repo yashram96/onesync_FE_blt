@@ -1,4 +1,3 @@
-```typescript
 import type { StorageLimit } from '~/types/billing'
 
 export function formatStorageLimit(limit: StorageLimit): string {
@@ -46,4 +45,3 @@ export function validateCVC(cvc: string): boolean {
   // Basic CVC validation (3-4 digits)
   return /^\d{3,4}$/.test(cvc)
 }
-```

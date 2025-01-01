@@ -13,7 +13,8 @@ const featureFlags = ref<FeatureFlags>({
 // Initialize flags when the app starts
 const initializeFlags = () => {
   if (process.client) {
-    featureFlags.value.showAuthLinks = window.__NUXT__?.env?.NUXT_PUBLIC_SHOW_AUTH_LINKS === 'true'
+    const config = useRuntimeConfig()
+    featureFlags.value.showAuthLinks = config.SHOW_AUTH_LINKS === 'true'
   }
 }
 
@@ -21,16 +22,17 @@ export function useFeatureFlags() {
   // Initialize flags on first use
   initializeFlags()
 
-  const isFeatureEnabled = computed(() => (flagName: keyof FeatureFlags): boolean => {
+  // Simplified computed property
+  const isFeatureEnabled = (flagName: keyof FeatureFlags): boolean => {
     return featureFlags.value[flagName]
-  })
+  }
 
   const setFeatureFlag = (flagName: keyof FeatureFlags, value: boolean): void => {
     featureFlags.value[flagName] = value
   }
 
   return {
-    isFeatureEnabled: isFeatureEnabled.value,
+    isFeatureEnabled,
     setFeatureFlag
   }
 }

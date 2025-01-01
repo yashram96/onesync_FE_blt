@@ -1,7 +1,8 @@
 <template>
   <ClientOnly>
     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <template v-if="isFeatureEnabled('showAuthLinks')">
+      <!-- <template v-if="isFeatureEnabled('showAuthLinks')"> -->
+      <template v-if="$globalVars.showAuthLinks">
         <NuxtLink to="/auth/login">
           <Button variant="primary">
             Sign In

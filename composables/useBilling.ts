@@ -1,4 +1,3 @@
-```typescript
 import { ref, computed } from 'vue'
 import type { BillingPlan } from '~/types/billing'
 
@@ -38,4 +37,3 @@ export function useBilling() {
     formatPlanPrice
   }
 }
-```

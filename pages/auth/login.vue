@@ -8,14 +8,13 @@
       <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
         <div class="rounded-md shadow-sm space-y-4">
           <div>
-            <label for="email" class="sr-only">Email address</label>
+            <label for="username" class="sr-only">Username</label>
             <input
-              id="email"
-              v-model="email"
-              type="email"
+              id="username"
+              v-model="username"
               required
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10"
-              placeholder="Email address"
+              placeholder="Username"
             />
           </div>
           <div>
@@ -72,22 +71,26 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+const { login } = useAuth()
 import OneSyncLogo from '~/components/icons/OneSyncLogo.vue'
 
 definePageMeta({
   middleware: ['guest']
 })
 
-const email = ref('')
+const username = ref('')
 const password = ref('')
 
 const handleLogin = async () => {
+  const success = await login(username.value, password.value)
   try {
-    // Implement login logic here
-    console.log('Login attempt:', { email: email.value, password: password.value })
-    navigateTo('/dashboard')
+    if (success) {
+      // router.push('/dashboard')
+      navigateTo('/dashboard')
+    }
   } catch (error) {
     console.error('Login failed:', error)
   }
+
 }
 </script>
